@@ -10,10 +10,10 @@ export default function Home() {
     <main className='w-full h-full flex justify-center'>
       <div className='bg-[#16161d] w-4/5 text-white h-full '>
           <div className='bg-gray-900 h-1/3 border-b-2  border-indigo-900'>
-            <div class="h-1/3 ">
+            <div className="h-1/3 ">
 
             </div>
-            <input type="text" class="h-2/3 px-1.5 caret-pink-500 outline-none w-full text-end text-[20vh] leading-none bg-gray-900 focus:border-transparent" />
+            <input type="text" className="h-2/3 px-1.5 caret-pink-500 outline-none w-full text-end text-[20vh] leading-none bg-gray-900 focus:border-transparent" />
           </div>
       </div>
       
