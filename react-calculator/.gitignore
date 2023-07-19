@@ -1,8 +1,2 @@
 .vscode/launch.json
 /.gitignore
-
-#test files
-react-calculator/app/board.js
-react-calculator/app/calculator.js
-react-calculator/app/calc.css
-react-calculator/app/index.css
