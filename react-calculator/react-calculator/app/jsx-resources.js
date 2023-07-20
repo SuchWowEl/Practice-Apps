@@ -8,6 +8,8 @@ import {
   faEquals,
 } from "@fortawesome/free-solid-svg-icons";
 
+//ADD MORE RESOURCES, IF NOT BUGS WILL STAY
+
 export const backspace = <FontAwesomeIcon icon={faBackspace} />;
 
 export const x2 = (
