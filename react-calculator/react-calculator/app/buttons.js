@@ -4,24 +4,31 @@ import React, { useState } from "react";
 import * as icons from "./jsx-resources.js";
 //import './index.css';
 
-const Numbers = ({ buttonPressed, setBPressed, value, onSquareClick }) => {
+const Numbers = ({
+  buttonPressed,
+  setBPressed,
+  text,
+  value,
+  onSquareClick,
+}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleOnClick = () => {
     setIsClicked(false);
+    //text is sometimes <math>, fix the conflict
     onSquareClick(value);
     setBPressed("");
   };
 
   const handleOnMouseDown = () => {
-    console.log("mouse down");
+    console.log("mouse down: " + text);
     setIsClicked(true);
     setBPressed(value);
   };
 
   const handleOnMouseUp = () => {
-    console.log("mouse up");
+    console.log('mouse up:  ""');
     setIsClicked(false);
     setBPressed("");
   };
@@ -57,12 +64,18 @@ const Numbers = ({ buttonPressed, setBPressed, value, onSquareClick }) => {
       onMouseLeave={handleOnMouseLeave}
       onMouseEnter={handleOnMouseEnter}
     >
-      <div>{value}</div>
+      <div>{text}</div>
     </button>
   );
 };
 
-const Operations = ({ buttonPressed, setBPressed, value, onSquareClick }) => {
+const Operations = ({
+  buttonPressed,
+  setBPressed,
+  text,
+  value,
+  onSquareClick,
+}) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -109,252 +122,279 @@ const Operations = ({ buttonPressed, setBPressed, value, onSquareClick }) => {
       onMouseLeave={handleOnMouseLeave}
       onMouseEnter={handleOnMouseEnter}
     >
-      <div>{value}</div>
+      <div>{text}</div>
     </button>
   );
 };
 
-export default function CalcPad() {
-  const [buttonPressed, setBPressed] = useState("");
-  let buttonPressed2;
-
-  function handleClick(string) {
-    buttonPressed2 = string;
-    console.log("buttonPressed: " + buttonPressed2);
-  }
-
+export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
   return (
     <div className="h-full flex flex-wrap gap-y-1 justify-center content-center text-center">
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="Shift"
           value="Shift"
-          onSquareClick={() => handleClick("Shift")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="π"
           value="π"
-          onSquareClick={() => handleClick("π")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="e"
           value="e"
-          onSquareClick={() => handleClick(".")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="C"
           value="C"
-          onSquareClick={() => handleClick("C")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.backspace}
-          onSquareClick={() => handleClick("backspace")}
+          text={icons.backspace}
+          value="backspace"
+          onSquareClick={(val) => onSquareClick(val)}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.x2}
-          onSquareClick={() => handleClick("x^2")}
+          text={icons.x2}
+          value="x^2"
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={<>&frac12;</>}
-          onSquareClick={() => handleClick("1/x")}
+          text={<>&frac12;</>}
+          value="1/x"
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.bar_x_bar}
-          onSquareClick={() => handleClick("|x|")}
+          text={icons.bar_x_bar}
+          value="|x|"
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="exp"
           value="exp"
-          onSquareClick={() => handleClick("exp")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="mod"
           value="mod"
-          onSquareClick={() => handleClick("mod")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={<>&radic;{"x"}</>}
-          onSquareClick={() => handleClick("square_root")}
+          text={<>&radic;{"x"}</>}
+          value="square_root"
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="("
           value="("
-          onSquareClick={() => handleClick("1/x")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text=")"
           value=")"
-          onSquareClick={() => handleClick("|x|")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="n!"
           value="n!"
-          onSquareClick={() => handleClick("exp")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.divide}
-          onSquareClick={() => handleClick("divide")}
+          text={icons.divide}
+          value="divide"
+          onSquareClick={(val) => onSquareClick(val)}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={
+          text={
             <>
               x<sup>y</sup>
             </>
           }
-          onSquareClick={() => handleClick("x^y")}
+          value="x^y"
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="7"
           value="7"
-          onSquareClick={() => handleClick("7")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="8"
           value="8"
-          onSquareClick={() => handleClick("8")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="9"
           value="9"
-          onSquareClick={() => handleClick("9")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.multiply}
-          onSquareClick={() => handleClick("x")}
+          text={icons.multiply}
+          value="x"
+          onSquareClick={(val) => onSquareClick(val)}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={
+          text={
             <>
               10<sup>x</sup>
             </>
           }
-          onSquareClick={() => handleClick("10x")}
+          value="10x"
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="4"
           value="4"
-          onSquareClick={() => handleClick("4")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="5"
           value="5"
-          onSquareClick={() => handleClick("5")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="6"
           value="6"
-          onSquareClick={() => handleClick("6")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.minus}
-          onSquareClick={() => handleClick("-")}
+          text={icons.minus}
+          value="-"
+          onSquareClick={(val) => onSquareClick(val)}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="log"
           value="log"
-          onSquareClick={() => handleClick("log")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="1"
           value="1"
-          onSquareClick={() => handleClick("1")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="2"
           value="2"
-          onSquareClick={() => handleClick("2")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="3"
           value="3"
-          onSquareClick={() => handleClick("3")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.plus}
-          onSquareClick={() => handleClick("+")}
+          text={icons.plus}
+          value="+"
+          onSquareClick={(val) => onSquareClick(val)}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="ln"
           value="ln"
-          onSquareClick={() => handleClick("ln")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="+/-"
           value="+/-"
-          onSquareClick={() => handleClick("+/-")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="0"
           value="0"
-          onSquareClick={() => handleClick("0")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Numbers
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
+          text="."
           value="."
-          onSquareClick={() => handleClick(".")}
+          onSquareClick={(val) => onSquareClick(val)}
         />
         <Operations
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
-          value={icons.equals}
-          onSquareClick={() => handleClick("=")}
+          text={icons.equals}
+          value="="
+          onSquareClick={(val) => onSquareClick(val)}
         />
       </div>
     </div>
