@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as icons from "./jsx-resources.js";
 //import './index.css';
 
@@ -13,6 +13,12 @@ const Numbers = ({
 }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  
+  useEffect(() => {
+    if (buttonPressed.length == 0){
+      setIsClicked(false);
+    }
+  }, [buttonPressed]);
 
   const handleOnClick = () => {
     setIsClicked(false);
@@ -78,6 +84,12 @@ const Operations = ({
 }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  
+  useEffect(() => {
+    if (buttonPressed.length == 0){
+      setIsClicked(false);
+    }
+  }, [buttonPressed]);
 
   const handleOnClick = () => {
     setIsClicked(false);
@@ -128,8 +140,14 @@ const Operations = ({
 };
 
 export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
+  const handleOnMouseUp = (e) => {
+    console.log("handleOnMouseUp !!!!!!!!!!!!!!!");
+    setBPressed("");
+    e.stopPropagation();
+  }
+
   return (
-    <div className="h-full flex flex-wrap gap-y-1 justify-center content-center text-center">
+    <div className="h-full flex flex-wrap gap-y-1 justify-center content-center text-center" onMouseUp={handleOnMouseUp}>
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}

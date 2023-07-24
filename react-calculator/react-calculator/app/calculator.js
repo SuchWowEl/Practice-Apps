@@ -13,18 +13,25 @@ export default function Whole_Calculator() {
   const refOne = useRef(null);
 
   useEffect(() => {
-    document.addEventListener("mouseup", handleMouseUpOutside, true);
+    window.addEventListener("mouseup", handleOnMouseUp, true);
 
     return () => {
-      document.removeEventListener("mouseup", handleMouseUpOutside, true);
+      window.removeEventListener("mouseup", handleOnMouseUp, true);
     };
   }, []);
 
-  const handleMouseUpOutside = (e) => {
-    if (refOne?.current || !refOne.current?.contains(e.target)) {
-      setBPressed("");
-    }
-  };
+  // const handleMouseUpOutside = (e) => {
+  //   if (refOne?.current || !refOne.current?.contains(e.target)) {
+  //     console.log("mouseup OUTSIDE")
+  //     setBPressed("");
+  //   }
+  // };
+
+  
+  function handleOnMouseUp() {
+    console.log("handleOnMouseUp @ calculator.js !!!!!!!!!!!!!!!");
+    setBPressed("");
+  }
 
   function handleClick(string) {
     console.log("WRITTEN: " + string);
@@ -34,14 +41,14 @@ export default function Whole_Calculator() {
   // useEffect(() => {
   //   console.log("WRITTEN: " + buttonPressed);
   // }, [buttonPressed]);
-
+  // useRef={refOne}
   return (
     <main className="w-full h-full flex justify-center">
       <div className="bg-[#16161d] w-4/5 text-white h-full ">
         <InputField buttonPressed={buttonPressed} />
         <div className="h-2/3">
           <CalcPad
-            useRef={refOne}
+            
             buttonPressed={buttonPressed}
             setBPressed={(val) => setBPressed(val)}
             onSquareClick={(val) => handleClick(val)}
@@ -49,7 +56,7 @@ export default function Whole_Calculator() {
         </div>
       </div>
 
-      <HistoryField buttonPressed={buttonPressed} />
+        <HistoryField buttonPressed={buttonPressed} />
     </main>
   );
 }
