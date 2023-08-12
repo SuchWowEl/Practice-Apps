@@ -10,18 +10,16 @@ const Numbers = ({
   text,
   value,
   onSquareClick,
+  mouseState,
+  setMouseState,
 }) => {
-  const [isClicked, setIsClicked] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  
-  useEffect(() => {
-    if (buttonPressed.length == 0){
-      setIsClicked(false);
-    }
-  }, [buttonPressed]);
+  console.log("number rendered " + value);
+  // const [isClicked, setIsClicked] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
 
   const handleOnClick = () => {
-    setIsClicked(false);
+    //setIsClicked(false);
+    setMouseState({ ...mouseState, isClicked: "" });
     //text is sometimes <math>, fix the conflict
     onSquareClick(value);
     setBPressed("");
@@ -29,41 +27,54 @@ const Numbers = ({
 
   const handleOnMouseDown = () => {
     console.log("mouse down: " + text);
-    setIsClicked(true);
+    setMouseState({ ...mouseState, isClicked: value });
+    //setIsClicked(true);
     setBPressed(value);
   };
 
   const handleOnMouseUp = () => {
     console.log('mouse up:  ""');
-    setIsClicked(false);
+    setMouseState({ ...mouseState, isClicked: "" });
+    //setIsClicked(false);
     setBPressed("");
   };
 
   const handleOnMouseLeave = () => {
-    setIsHovered(false);
+    setMouseState({ ...mouseState, isHovered: "" });
+    //setIsHovered(false);
   };
 
   const handleOnMouseEnter = () => {
     // setIsHovered(true);
-    console.log("handleOnMouseEnter: " + buttonPressed);
-    if (buttonPressed.length == 0 || buttonPressed == value) setIsHovered(true);
+    //console.log("handleOnMouseEnter: " + buttonPressed);
+    if (buttonPressed.length == 0 || buttonPressed == value)
+      setMouseState({ ...mouseState, isHovered: value });
   };
 
-  //${isClicked && isHovered ? "text-gray-400" : "text-white"}
+  function styler() {
+    let estilo =
+      "square mx-px rounded-md h-full w-[calc(100%/5.1)]" +
+      ` 
+      ${
+        mouseState.isHovered == value
+          ? mouseState.isClicked == value
+            ? "bg-[#1e1c4d] text-gray-300"
+            : "bg-[#323232] text-white"
+          : "bg-[#2a286e] text-white"
+      } 
+    `;
+    if (value == ".") {
+      console.log("------------------------------------------ 👀👀👀👀👀");
+      console.log(value);
+      console.log("isHovered is: " + mouseState.isHovered);
+      console.log("isClicked is: " + mouseState.isClicked);
+    }
+    return estilo;
+  }
+
   return (
     <button
-      className={
-        "square mx-px rounded-md h-full w-[calc(100%/5.1)]" +
-        ` 
-          ${
-            isHovered
-              ? isClicked
-                ? "bg-[#1e1c4d] text-gray-300"
-                : "bg-[#323232] text-white"
-              : "bg-[#2a286e] text-white"
-          } 
-        `
-      }
+      className={styler()}
       onClick={handleOnClick}
       onMouseDown={handleOnMouseDown}
       onMouseUp={handleOnMouseUp}
@@ -81,42 +92,51 @@ const Operations = ({
   text,
   value,
   onSquareClick,
+  mouseState,
+  setMouseState,
 }) => {
-  const [isClicked, setIsClicked] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  
-  useEffect(() => {
-    if (buttonPressed.length == 0){
-      setIsClicked(false);
-    }
-  }, [buttonPressed]);
+  // const [isClicked, setIsClicked] = useState(false);
+  // const [isHovered, setIsHovered] = useState(false);
+
+  // useEffect(() => {
+  //   if (buttonPressed.length == 0) {
+  //     console.log("useEffect OPERATIONS");
+  //     setIsClicked(false);
+  //   }
+  // }, [buttonPressed]);
 
   const handleOnClick = () => {
-    setIsClicked(false);
+    //setIsClicked(false);
+    setMouseState({ ...mouseState, isClicked: "" });
+    //text is sometimes <math>, fix the conflict
     onSquareClick(value);
     setBPressed("");
   };
 
   const handleOnMouseDown = () => {
-    console.log("mouse down");
-    setIsClicked(true);
+    console.log("mouse down: " + text);
+    setMouseState({ ...mouseState, isClicked: value });
+    //setIsClicked(true);
     setBPressed(value);
   };
 
   const handleOnMouseUp = () => {
-    console.log("mouse up");
-    setIsClicked(false);
+    console.log('mouse up:  ""');
+    setMouseState({ ...mouseState, isClicked: "" });
+    //setIsClicked(false);
     setBPressed("");
   };
 
   const handleOnMouseLeave = () => {
-    setIsHovered(false);
+    setMouseState({ ...mouseState, isHovered: "" });
+    //setIsHovered(false);
   };
 
   const handleOnMouseEnter = () => {
     // setIsHovered(true);
-    console.log("handleOnMouseEnter: " + buttonPressed);
-    if (buttonPressed.length == 0 || buttonPressed == value) setIsHovered(true);
+    //console.log("handleOnMouseEnter: " + buttonPressed);
+    if (buttonPressed.length == 0 || buttonPressed == value)
+      setMouseState({ ...mouseState, isHovered: value });
   };
 
   return (
@@ -124,8 +144,12 @@ const Operations = ({
       className={
         "square mx-px rounded-md h-full w-[calc(100%/5.1)]" +
         ` 
-          ${isHovered ? "bg-[#2a286e] " : "bg-[#323232]"} 
-          ${isClicked && isHovered ? "text-gray-400" : "text-white"}
+          ${mouseState.isHovered == value ? "bg-[#2a286e] " : "bg-[#323232]"} 
+          ${
+            mouseState.isClicked == value && mouseState.isHovered == value
+              ? "text-gray-400"
+              : "text-white"
+          }
         `
       }
       onClick={handleOnClick}
@@ -139,15 +163,31 @@ const Operations = ({
   );
 };
 
-export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
-  const handleOnMouseUp = (e) => {
-    console.log("handleOnMouseUp !!!!!!!!!!!!!!!");
+export default function CalcPad({ buttonPressed, setBPressed, onSquareClick }) {
+  const [mouseState, setMouseState] = useState({
+    isClicked: "",
+    isHovered: "",
+  });
+
+  useEffect(() => {
+    window.addEventListener("mouseup", handleOnMouseUpOutside, true);
+
+    return () => {
+      window.removeEventListener("mouseup", handleOnMouseUpOutside, true);
+    };
+  });
+
+  function handleOnMouseUpOutside() {
+    //console.log("handleOnMouseUp @ buttons.js !!!!!!!!!!!!!!!");
+    setMouseState({
+      isClicked: "",
+      isHovered: "",
+    });
     setBPressed("");
-    e.stopPropagation();
   }
 
   return (
-    <div className="h-full flex flex-wrap gap-y-1 justify-center content-center text-center" onMouseUp={handleOnMouseUp}>
+    <div className="h-full flex flex-wrap gap-y-1 justify-center content-center text-center">
       <div className="board-row h-[calc(100%/7.5)] w-full">
         <Operations
           buttonPressed={buttonPressed}
@@ -155,6 +195,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="Shift"
           value="Shift"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -162,6 +204,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="π"
           value="π"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -169,6 +213,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="e"
           value="e"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -176,6 +222,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="C"
           value="C"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -183,6 +231,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.backspace}
           value="backspace"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
@@ -192,6 +242,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.x2}
           value="x^2"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -199,6 +251,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={<>&frac12;</>}
           value="1/x"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -206,6 +260,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.bar_x_bar}
           value="|x|"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -213,6 +269,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="exp"
           value="exp"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -220,6 +278,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="mod"
           value="mod"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
@@ -227,8 +287,10 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           buttonPressed={buttonPressed}
           setBPressed={setBPressed}
           text={<>&radic;{"x"}</>}
-          value="square_root"
+          value="√("
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -236,6 +298,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="("
           value="("
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -243,6 +307,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text=")"
           value=")"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -250,6 +316,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="n!"
           value="n!"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -257,6 +325,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.divide}
           value="divide"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
@@ -270,6 +340,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           }
           value="x^y"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -277,6 +349,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="7"
           value="7"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -284,6 +358,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="8"
           value="8"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -291,6 +367,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="9"
           value="9"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -298,6 +376,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.multiply}
           value="x"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
@@ -311,6 +391,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           }
           value="10x"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -318,6 +400,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="4"
           value="4"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -325,6 +409,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="5"
           value="5"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -332,6 +418,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="6"
           value="6"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -339,6 +427,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.minus}
           value="-"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
@@ -348,6 +438,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="log"
           value="log"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -355,6 +447,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="1"
           value="1"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -362,6 +456,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="2"
           value="2"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -369,6 +465,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="3"
           value="3"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -376,6 +474,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.plus}
           value="+"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
       </div>
       <div className="board-row h-[calc(100%/7.5)] w-full">
@@ -385,6 +485,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="ln"
           value="ln"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -392,6 +494,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="+/-"
           value="+/-"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -399,6 +503,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="0"
           value="0"
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Numbers
           buttonPressed={buttonPressed}
@@ -406,6 +512,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text="."
           value="."
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
         <Operations
           buttonPressed={buttonPressed}
@@ -413,6 +521,8 @@ export default function CalcPad({ buttonPressed, setBPressed, onSquareClick}) {
           text={icons.equals}
           value="="
           onSquareClick={(val) => onSquareClick(val)}
+          mouseState={mouseState}
+          setMouseState={setMouseState}
         />
       </div>
     </div>
