@@ -13,7 +13,7 @@ const Numbers = ({
   mouseState,
   setMouseState,
 }) => {
-  console.log("number rendered " + value);
+  //console.log("number rendered " + value);
   // const [isClicked, setIsClicked] = useState(false);
   // const [isHovered, setIsHovered] = useState(false);
 
@@ -22,7 +22,8 @@ const Numbers = ({
     setMouseState({ ...mouseState, isClicked: "" });
     //text is sometimes <math>, fix the conflict
     onSquareClick(value);
-    setBPressed("");
+    //setBPressed("");
+    setMouseState({ ...mouseState, isHovered: value });
   };
 
   const handleOnMouseDown = () => {
@@ -51,10 +52,32 @@ const Numbers = ({
       setMouseState({ ...mouseState, isHovered: value });
   };
 
-  function styler() {
-    let estilo =
-      "square mx-px rounded-md h-full w-[calc(100%/5.1)]" +
-      ` 
+  // function styler() {
+  //   let estilo =
+  //     "square mx-px rounded-md h-full w-[calc(100%/5.1)]" +
+  //     `
+  //     ${
+  //       mouseState.isHovered == value
+  //         ? mouseState.isClicked == value
+  //           ? "bg-[#1e1c4d] text-gray-300"
+  //           : "bg-[#323232] text-white"
+  //         : "bg-[#2a286e] text-white"
+  //     }
+  //   `;
+  //   // if (value == ".") {
+  //   //   console.log("------------------------------------------ 👀👀👀👀👀");
+  //   //   console.log(value);
+  //   //   console.log("isHovered is: " + mouseState.isHovered);
+  //   //   console.log("isClicked is: " + mouseState.isClicked);
+  //   // }
+  //   return estilo;
+  // }
+
+  return (
+    <button
+      className={
+        "square mx-px rounded-md h-full w-[calc(100%/5.1)]" +
+        ` 
       ${
         mouseState.isHovered == value
           ? mouseState.isClicked == value
@@ -62,19 +85,8 @@ const Numbers = ({
             : "bg-[#323232] text-white"
           : "bg-[#2a286e] text-white"
       } 
-    `;
-    if (value == ".") {
-      console.log("------------------------------------------ 👀👀👀👀👀");
-      console.log(value);
-      console.log("isHovered is: " + mouseState.isHovered);
-      console.log("isClicked is: " + mouseState.isClicked);
-    }
-    return estilo;
-  }
-
-  return (
-    <button
-      className={styler()}
+    `
+      }
       onClick={handleOnClick}
       onMouseDown={handleOnMouseDown}
       onMouseUp={handleOnMouseUp}
@@ -110,7 +122,8 @@ const Operations = ({
     setMouseState({ ...mouseState, isClicked: "" });
     //text is sometimes <math>, fix the conflict
     onSquareClick(value);
-    setBPressed("");
+    //setBPressed("");
+    setMouseState({ ...mouseState, isHovered: value });
   };
 
   const handleOnMouseDown = () => {
@@ -164,6 +177,7 @@ const Operations = ({
 };
 
 export default function CalcPad({ buttonPressed, setBPressed, onSquareClick }) {
+  console.log("render CalcPad");
   const [mouseState, setMouseState] = useState({
     isClicked: "",
     isHovered: "",

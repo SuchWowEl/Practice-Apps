@@ -9,7 +9,7 @@ import { InputField } from "./input-field.js";
 export default function CalcDisplay() {
   const [buttonPressed, setBPressed] = useState("");
   const [displayChar, setDisplayVar] = useState("");
-  console.log("CalcDisplay Rendered");
+  console.log("render Display");
   //let displayChar = "";
 
   function backspacer(string) {
