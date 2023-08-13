@@ -9,13 +9,12 @@ import { InputField } from "./input-field.js";
 export default function CalcDisplay() {
   const [buttonPressed, setBPressed] = useState("");
   const [displayChar, setDisplayVar] = useState("");
-  console.log("render Display");
+  console.log("render Display\ndisplayChar: ", displayChar);
   //let displayChar = "";
 
   function backspacer(string) {
     let temp = string.replace(/backspace/g, "");
     temp = temp.substring(0, temp.length - 1);
-    console.log("temp is " + temp);
     return temp;
   }
 
@@ -25,18 +24,19 @@ export default function CalcDisplay() {
     console.log("WRITTEN: " + char); //display to InputField
     if (char == "backspace") {
       console.log("backed");
-      setDisplayVar(() => backspacer(displayChar));
+      let temp = backspacer(displayChar);
+      console.log("temp is " + temp);
+      setDisplayVar(temp);
     } else if (char != "") {
       setDisplayVar(displayChar + char);
     }
     setBPressed("");
   }
 
-  function handleOnChange(string) {
-    console.log("string.data: " + string.data);
-    setDisplayVar((existed_string) =>
-      setDisplayVar(existed_string + string.data)
-    );
+  function handleOnChange(e) {
+    let temp = e.target.value;
+    console.log("e.data: " + temp);
+    setDisplayVar(temp);
     console.log("displayChar: " + `${displayChar}`);
   }
 
@@ -48,8 +48,8 @@ export default function CalcDisplay() {
           type="text"
           className="h-2/3 px-1.5 caret-pink-500 outline-none
           w-full text-end text-[20vh] leading-none bg-[#16161d] focus:border-transparent"
-          defaultValue={displayChar}
-          onChange={(string) => handleOnChange(string)}
+          value={displayChar}
+          onChange={handleOnChange}
         />
       </div>
       <div className="h-2/3">

@@ -127,7 +127,7 @@ const Operations = ({
   };
 
   const handleOnMouseDown = () => {
-    console.log("mouse down: " + text);
+    console.log("mouse down: " + value);
     setMouseState({ ...mouseState, isClicked: value });
     //setIsClicked(true);
     setBPressed(value);
