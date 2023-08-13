@@ -53,11 +53,7 @@ export default function CalcDisplay() {
         />
       </div>
       <div className="h-2/3">
-        <CalcPad
-          buttonPressed={buttonPressed}
-          setBPressed={(val) => setBPressed(val)}
-          onSquareClick={(val) => handleClick(val)}
-        />
+        <CalcPad onSquareClick={(val) => handleClick(val)} />
       </div>
     </>
   );
