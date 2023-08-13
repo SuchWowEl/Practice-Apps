@@ -4,15 +4,7 @@ import React, { useState, useEffect } from "react";
 import * as icons from "./jsx-resources.js";
 //import './index.css';
 
-const Numbers = ({
-  buttonPressed,
-  setBPressed,
-  text,
-  value,
-  onSquareClick,
-  mouseState,
-  setMouseState,
-}) => {
+const Numbers = ({ text, value, numberClick, mouseState, setMouseState }) => {
   //console.log("number rendered " + value);
   // const [isClicked, setIsClicked] = useState(false);
   // const [isHovered, setIsHovered] = useState(false);
@@ -21,7 +13,7 @@ const Numbers = ({
     //setIsClicked(false);
     setMouseState({ ...mouseState, isClicked: "" });
     //text is sometimes <math>, fix the conflict
-    onSquareClick(value);
+    numberClick(value);
     //setBPressed("");
     setMouseState({ ...mouseState, isHovered: value });
   };
@@ -99,11 +91,9 @@ const Numbers = ({
 };
 
 const Operations = ({
-  buttonPressed,
-  setBPressed,
   text,
   value,
-  onSquareClick,
+  operationClick,
   mouseState,
   setMouseState,
 }) => {
@@ -121,7 +111,7 @@ const Operations = ({
     //setIsClicked(false);
     setMouseState({ ...mouseState, isClicked: "" });
     //text is sometimes <math>, fix the conflict
-    onSquareClick(value);
+    operationClick(value);
     //setBPressed("");
     setMouseState({ ...mouseState, isHovered: value });
   };
@@ -176,7 +166,7 @@ const Operations = ({
   );
 };
 
-export default function CalcPad({ onSquareClick }) {
+export default function CalcPad({ numberClick, operationClick }) {
   console.log("render CalcPad");
   const [mouseState, setMouseState] = useState({
     isClicked: "",
@@ -206,35 +196,35 @@ export default function CalcPad({ onSquareClick }) {
         <Operations
           text="Shift"
           value="Shift"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text="π"
           value="π"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text="e"
           value="e"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text="C"
           value="C"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={icons.backspace}
           value="backspace"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
@@ -243,35 +233,35 @@ export default function CalcPad({ onSquareClick }) {
         <Operations
           text={icons.x2}
           value="x^2"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={<>&frac12;</>}
           value="1/x"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={icons.bar_x_bar}
           value="|x|"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text="exp"
           value="exp"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text="mod"
           value="mod"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
@@ -280,35 +270,35 @@ export default function CalcPad({ onSquareClick }) {
         <Operations
           text={<>&radic;{"x"}</>}
           value="√("
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text="("
           value="("
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text=")"
           value=")"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text="n!"
           value="n!"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={icons.divide}
           value="divide"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
@@ -321,35 +311,35 @@ export default function CalcPad({ onSquareClick }) {
             </>
           }
           value="x^y"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="7"
           value="7"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="8"
           value="8"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="9"
           value="9"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={icons.multiply}
           value="x"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
@@ -362,35 +352,35 @@ export default function CalcPad({ onSquareClick }) {
             </>
           }
           value="10x"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="4"
           value="4"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="5"
           value="5"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="6"
           value="6"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={icons.minus}
           value="-"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
@@ -399,35 +389,35 @@ export default function CalcPad({ onSquareClick }) {
         <Operations
           text="log"
           value="log"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="1"
           value="1"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="2"
           value="2"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="3"
           value="3"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={icons.plus}
           value="+"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
@@ -436,35 +426,35 @@ export default function CalcPad({ onSquareClick }) {
         <Operations
           text="ln"
           value="ln"
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="+/-"
           value="+/-"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="0"
           value="0"
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Numbers
           text="."
           value="."
-          onSquareClick={(val) => onSquareClick(val)}
+          numberClick={(val) => numberClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
         <Operations
           text={icons.equals}
           value="="
-          onSquareClick={(val) => onSquareClick(val)}
+          operationClick={(val) => operationClick(val)}
           mouseState={mouseState}
           setMouseState={setMouseState}
         />
